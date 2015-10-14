@@ -9,18 +9,18 @@ DataBase::DataBase(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    hHeads.append("Country");
-    hHeads.append("Population (in million)");
-    count = 0;
+    m_hHeads.append("Country");
+    m_hHeads.append("Population (in million)");
+    m_count = 0;
     CreateTable();
 }
 
 void DataBase::CreateTable()
 {
-    model->setHorizontalHeaderLabels(hHeads);
-    model->setVerticalHeaderLabels(vHeads);
+    m_model->setHorizontalHeaderLabels(m_hHeads);
+    m_model->setVerticalHeaderLabels(m_vHeads);
 
-    ui->tableView->setModel(model);
+    ui->tableView->setModel(m_model);
     ui->tableView->resizeRowsToContents();
     ui->tableView->resizeColumnsToContents();
 }
@@ -28,16 +28,16 @@ void DataBase::CreateTable()
 DataBase::~DataBase()
 {
     delete ui;
-    delete model;
-    delete item;
+    delete m_model;
+    delete m_item;
 }
 
 
 void DataBase::on_actionNew_Table_triggered()
 {
-    model->clear();
-    vHeads.clear();
-    count = 0;
+    m_model->clear();
+    m_vHeads.clear();
+    m_count = 0;
     CreateTable();
 }
 
@@ -48,14 +48,14 @@ void DataBase::on_actionAdd_Field_triggered()
     {
         if (m_addFieldForm.GetCountry() != "")
         {
-            count++;
-            vHeads.append(QString::number(count));
+            m_count++;
+            m_vHeads.append(QString::number(m_count));
 
-            item = new QStandardItem(m_addFieldForm.GetCountry());
-            model->setItem(count - 1, 0, item);
+            m_item = new QStandardItem(m_addFieldForm.GetCountry());
+            m_model->setItem(m_count - 1, 0, m_item);
 
-            item = new QStandardItem(m_addFieldForm.GetPopulation());
-            model->setItem(count - 1, 1, item);
+            m_item = new QStandardItem(m_addFieldForm.GetPopulation());
+            m_model->setItem(m_count - 1, 1, m_item);
 
             CreateTable();
         }
@@ -75,10 +75,10 @@ void DataBase::on_actionEXit_triggered()
 
 void DataBase::on_actionDelete_Field_triggered()
 {
-    int mCount = ui->tableView->selectionModel()->selectedRows().count();
-    for (int i = 0; i < mCount; i++)
+    int Count = ui->tableView->selectionModel()->selectedRows().count();
+    for (int i = 0; i < Count; i++)
     {
         ui->tableView->model()->removeRow(ui->tableView->selectionModel()->selectedRows().at(i).row(), QModelIndex());
-        count--;
+        m_count--;
     }
 }

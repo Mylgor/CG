@@ -23,21 +23,17 @@ public:
 
 private slots:
     void on_actionNew_Table_triggered();
-
     void on_actionAdd_Field_triggered();
-
     void on_actionAbout_Application_triggered();
-
     void on_actionEXit_triggered();
-
     void on_actionDelete_Field_triggered();
 
 private:
     Ui::DataBase *ui;
-    QStandardItemModel *model = new QStandardItemModel;
-    QStandardItem *item;
-    QStringList hHeads, vHeads;
-    int count;
+    QStandardItemModel *m_model = new QStandardItemModel;
+    QStandardItem *m_item;
+    QStringList m_hHeads, m_vHeads;
+    int m_count;
 
     AddField m_addFieldForm;
     AboutApp m_aboutAppForm;
